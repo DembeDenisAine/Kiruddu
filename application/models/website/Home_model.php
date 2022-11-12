@@ -40,14 +40,21 @@ class Home_model extends CI_Model
 
 	public function get_sliders()
 	{
-		return $this->db->select('ws_slider.url, ws_slider.position, ws_slider.image, ws_slider.status, ws_slider.id, lang.*')
+		return $this->db->select('ws_slider.url, ws_slider.position, ws_slider.image, ws_slider.status, ws_slider.id')
+			    ->from('ws_slider')
+			    ->where('ws_slider.status',1)
+				->order_by('ws_slider.position','asc')
+	            ->get()
+	            ->result();
+
+	   /* return $this->db->select('ws_slider.url, ws_slider.position, ws_slider.image, ws_slider.status, ws_slider.id, lang.*')
 			    ->from('ws_slider_lang as lang')
 			    ->join('ws_slider', 'ws_slider.id=lang.slider_id')
 			    ->where('lang.language', (!empty($this->language)?$this->language:$this->defualt))
 			    ->where('ws_slider.status',1)
 				->order_by('ws_slider.position','asc')
 	            ->get()
-	            ->result();
+	            ->result();*/
 	} 
  
 	public function slider_details($id = null)
